@@ -39,91 +39,103 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { create, update, detail, isNameExists } from "@/api/sys/role";
-import Popup from "@/components/Popup/index.vue";
-import { type FormInstance, ElMessage } from "element-plus";
-import { computed, reactive, ref, shallowRef } from "vue";
+import { create, update, detail, isNameExists, type Role } from "@/api/sys/role"
+import Popup from "@/components/Popup/index.vue"
+import { type FormInstance, ElMessage, FormItemRule } from "element-plus"
+import { computed, reactive, ref, shallowRef } from "vue"
+import { Arrayable } from "element-plus/lib/utils"
 
-const emit = defineEmits(["success", "close"]);
-const formRef = shallowRef<FormInstance>();
-const popupRef = shallowRef<InstanceType<typeof Popup>>();
-const mode = ref("create");
+const emit = defineEmits(["success", "close"])
+const formRef = shallowRef<FormInstance>()
+const popupRef = shallowRef<InstanceType<typeof Popup>>()
+const mode = ref("create")
 const popupTitle = computed(() => {
   if (mode.value === "create") {
-    return "新增角色";
+    return "新增角色"
   }
-  return mode.value == "update" ? "编辑角色" : "角色详情";
-});
+  return mode.value == "update" ? "编辑角色" : "角色详情"
+})
 const formData = reactive({
   id: "",
   name: "",
-  description: "",
-});
+  description: ""
+})
 
-const validateName = (rule, value, callback) => {
+const validateName = (rule: FormItemRule, value: string, callback: any) => {
   if (!value) {
-    return callback();
+    return callback()
   }
   isNameExists(formData.id, value).then((res) => {
-    if (res.data) {
-      callback(new Error("名称已经存在"));
+    if (res) {
+      callback(new Error("名称已经存在"))
     } else {
-      callback();
+      callback()
     }
-  });
-};
+  })
+}
 
-const rules = {
+const rules: Partial<Record<string, Arrayable<FormItemRule>>> = {
   name: [
-    {
-      required: true,
-      message: "请输入名称",
-      trigger: ["blur"],
-    },
+    { required: true, message: "请输入名称", trigger: ["blur", "change"] },
     {
       min: 3,
-      max: 20,
+      max: 10,
       message: "名称长度应该为 3 ~ 20 个字符",
-      trigger: ["blur"],
+      trigger: ["blur", "change"]
     },
-    { validator: validateName, trigger: "blur" },
-  ],
-};
+    { validator: validateName, trigger: "blur" }
+  ]
+}
+
+// const rules = {
+//   name: [
+//     {
+//       required: true,
+//       message: "请输入名称",
+//       trigger: ["blur"],
+//     },
+//     {
+//       min: 3,
+//       max: 20,
+//       message: "名称长度应该为 3 ~ 20 个字符",
+//       trigger: ["blur"],
+//     },
+//     { validator: validateName, trigger: "blur" },
+//   ],
+// };
 
 const handleSubmit = async () => {
-  await formRef.value?.validate();
-  const params = { ...formData };
+  await formRef.value?.validate()
+  const params = { ...formData }
   if (mode.value === "create") {
-    await create(params);
-    ElMessage.success("操作成功");
+    await create(params)
+    ElMessage.success("操作成功")
   } else if (mode.value === "update") {
-    await update(params);
-    ElMessage.success("操作成功");
+    await update(params)
+    ElMessage.success("操作成功")
   }
-  popupRef.value?.close();
-  emit("success");
-};
+  popupRef.value?.close()
+  emit("success")
+}
 
 const handleClose = () => {
-  emit("close");
-};
+  emit("close")
+}
 
-const open = (type) => {
-  mode.value = type;
-  popupRef.value?.open();
-};
+const open = (type: string) => {
+  mode.value = type
+  popupRef.value?.open()
+}
 
 const setFormData = async (id: string) => {
-  const data = (await detail(id)).data;
-  for (const key in formData) {
-    if (data[key] && data[key]) {
-      formData[key] = data[key];
-    }
-  }
-};
+  const data: Role = await detail(id)
+  formData.id = data.id
+  formData.description = data.description
+  formData.name = data.name
+}
 
 defineExpose({
   open,
-  setFormData,
-});
+  setFormData
+})
 </script>

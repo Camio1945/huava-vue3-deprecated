@@ -1,23 +1,21 @@
 export interface LoginRequestData {
   /** admin 或 editor */
-  username: "admin" | "editor";
+  username: string
   /** 密码 */
-  password: string;
+  password: string
   /** 验证码 */
-  captchaCode: string;
-  isCaptchaDisabledForTesting: boolean;
+  captchaCode: string
+  isCaptchaDisabledForTesting: boolean
 }
 
-export type LoginCodeResponseData = ApiResponseData<string>;
+export type LoginResData = {
+  accessToken: string
+  refreshToken: string
+}
 
-export type LoginResponseData = ApiResponseData<{
-  accessToken: string;
-  refreshToken: string;
-}>;
+export type UserInfoResData = {
+  username: string
+  roles: string[]
+}
 
-export type UserInfoResponseData = ApiResponseData<{
-  username: string;
-  roles: string[];
-}>;
-
-export type UserMenuResponseData = IApiResponseData<{ menu: any[] }>;
+// export type UserMenuResData = IApiResData<{ menu: any[] }>;

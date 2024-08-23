@@ -1,3 +1,13 @@
+---
+## huava-vue3
+
+The frontend of [huava](https://github.com/Camio1945/huava).
+
+Base on [v3-admin-vite](https://github.com/un-pany/v3-admin-vite).
+---
+
+# Here is the README from v3-admin-vite
+
 <div align="center">
   <img alt="V3 Admin Vite Logo" width="120" height="120" src="./src/assets/layouts/logo.png">
   <h1>V3 Admin Vite</h1>

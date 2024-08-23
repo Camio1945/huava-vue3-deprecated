@@ -1,78 +1,78 @@
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { useUserStore } from "@/store/modules/user";
-import { type FormInstance, type FormRules } from "element-plus";
-import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue";
-import { getLoginCodeApi } from "@/api/login";
-import { type LoginRequestData } from "@/api/login/types/login";
-import ThemeSwitch from "@/components/ThemeSwitch/index.vue";
-import Owl from "./components/Owl.vue";
-import { useFocus } from "./hooks/useFocus";
+import { reactive, ref } from "vue"
+import { useRouter } from "vue-router"
+import { useUserStore } from "@/store/modules/user"
+import { type FormInstance, type FormRules } from "element-plus"
+import { User, Lock, Key, Picture, Loading } from "@element-plus/icons-vue"
+import { getLoginCode } from "@/api/login"
+import { type LoginRequestData } from "@/api/login/types/login"
+import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
+import Owl from "./components/Owl.vue"
+import { useFocus } from "./hooks/useFocus"
 
-const router = useRouter();
-const { isFocus, handleBlur, handleFocus } = useFocus();
+const router = useRouter()
+const { isFocus, handleBlur, handleFocus } = useFocus()
 
 /** 登录表单元素的引用 */
-const loginFormRef = ref<FormInstance | null>(null);
+const loginFormRef = ref<FormInstance | null>(null)
 
 /** 登录按钮 Loading */
-const loading = ref(false);
+const loading = ref(false)
 /** 验证码图片 URL */
-const captchaCodeUrl = ref("");
+const captchaCodeUrl = ref("")
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
   username: "admin",
   password: "123456",
   captchaCode: "0000",
-  isCaptchaDisabledForTesting: true,
-});
+  isCaptchaDisabledForTesting: true
+})
 /** 登录表单校验规则 */
 const loginFormRules: FormRules = {
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [
     { required: true, message: "请输入密码", trigger: "blur" },
-    { min: 6, max: 20, message: "长度在 6 到 20 个字符", trigger: "blur" },
+    { min: 6, max: 20, message: "长度在 6 到 20 个字符", trigger: "blur" }
   ],
-  captchaCode: [{ required: true, message: "请输入验证码", trigger: "blur" }],
-};
+  captchaCode: [{ required: true, message: "请输入验证码", trigger: "blur" }]
+}
 /** 登录逻辑 */
 const handleLogin = () => {
   loginFormRef.value?.validate((valid: boolean, fields) => {
     if (valid) {
-      loading.value = true;
+      loading.value = true
       useUserStore()
         .login(loginFormData)
         .then(() => {
-          router.push({ path: "/" });
+          router.push({ path: "/" })
         })
         .catch(() => {
-          createCode();
-          loginFormData.password = "";
+          createCode()
+          loginFormData.password = ""
         })
         .finally(() => {
-          loading.value = false;
-        });
+          loading.value = false
+        })
     } else {
-      console.error("表单校验不通过", fields);
+      console.error("表单校验不通过", fields)
     }
-  });
-};
+  })
+}
 /** 创建验证码 */
 const createCode = () => {
   // 先清空验证码的输入
-  loginFormData.captchaCode = "";
+  loginFormData.captchaCode = ""
   // 获取验证码
-  captchaCodeUrl.value = "";
-  getLoginCodeApi().then((res) => {
-    captchaCodeUrl.value = res.data;
-  });
-};
+  captchaCodeUrl.value = ""
+  getLoginCode().then((url) => {
+    captchaCodeUrl.value = url
+  })
+}
 
 /** 初始化验证码 */
-const captchaCode = loginFormData.captchaCode;
-createCode();
-loginFormData.captchaCode = captchaCode;
+const captchaCode = loginFormData.captchaCode
+createCode()
+loginFormData.captchaCode = captchaCode
 </script>
 
 <template>
@@ -124,11 +124,7 @@ loginFormData.captchaCode = captchaCode;
               size="large"
             >
               <template #append>
-                <el-image
-                  :src="captchaCodeUrl"
-                  @click="createCode"
-                  draggable="false"
-                >
+                <el-image :src="captchaCodeUrl" @click="createCode" draggable="false">
                   <template #placeholder>
                     <el-icon>
                       <Picture />
@@ -148,8 +144,8 @@ loginFormData.captchaCode = captchaCode;
             type="primary"
             size="large"
             @click.prevent="handleLogin"
-            >登 录</el-button
-          >
+            >登 录
+          </el-button>
         </el-form>
       </div>
     </div>
@@ -164,12 +160,14 @@ loginFormData.captchaCode = captchaCode;
   align-items: center;
   width: 100%;
   min-height: 100%;
+
   .theme-switch {
     position: fixed;
     top: 5%;
     right: 5%;
     cursor: pointer;
   }
+
   .login-card {
     width: 480px;
     max-width: 90%;
@@ -177,20 +175,25 @@ loginFormData.captchaCode = captchaCode;
     box-shadow: 0 0 10px #dcdfe6;
     background-color: var(--el-bg-color);
     overflow: hidden;
+
     .title {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 150px;
+
       img {
         height: 100%;
       }
     }
+
     .content {
       padding: 20px 50px 50px 50px;
+
       :deep(.el-input-group__append) {
         padding: 0;
         overflow: hidden;
+
         .el-image {
           width: 100px;
           height: 40px;
@@ -200,6 +203,7 @@ loginFormData.captchaCode = captchaCode;
           text-align: center;
         }
       }
+
       .el-button {
         width: 100%;
         margin-top: 10px;
