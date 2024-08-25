@@ -1,8 +1,8 @@
-import { type RouteRecordRaw, createRouter } from "vue-router";
-import { history, flatMultiLevelRoutes } from "./helper";
-import routeSettings from "@/config/route";
+import { type RouteRecordRaw, createRouter } from "vue-router"
+import { history, flatMultiLevelRoutes } from "./helper"
+import routeSettings from "@/config/route"
 
-const Layouts = () => import("@/layouts/index.vue");
+const Layouts = () => import("@/layouts/index.vue")
 
 /**
  * 常驻路由
@@ -13,36 +13,36 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/redirect",
     component: Layouts,
     meta: {
-      hidden: true,
+      hidden: true
     },
     children: [
       {
         path: ":path(.*)",
-        component: () => import("@/views/redirect/index.vue"),
-      },
-    ],
+        component: () => import("@/views/redirect/index.vue")
+      }
+    ]
   },
   {
     path: "/403",
     component: () => import("@/views/error-page/403.vue"),
     meta: {
-      hidden: true,
-    },
+      hidden: true
+    }
   },
   {
     path: "/404",
     component: () => import("@/views/error-page/404.vue"),
     meta: {
-      hidden: true,
+      hidden: true
     },
-    alias: "/:pathMatch(.*)*",
+    alias: "/:pathMatch(.*)*"
   },
   {
     path: "/login",
     component: () => import("@/views/login/index.vue"),
     meta: {
-      hidden: true,
-    },
+      hidden: true
+    }
   },
   {
     path: "/",
@@ -52,189 +52,187 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "dashboard",
         component: () => import("@/views/dashboard/index.vue"),
-        name: "Dashboard",
+        username: "Dashboard",
         meta: {
           title: "首页",
           svgIcon: "dashboard",
-          affix: true,
-        },
-      },
-    ],
+          affix: true
+        }
+      }
+    ]
   },
   {
     path: "/link",
     meta: {
       title: "外链",
-      svgIcon: "link",
+      svgIcon: "link"
     },
     children: [
       {
         path: "https://juejin.cn/post/7089377403717287972",
         component: () => {},
-        name: "Link1",
+        username: "Link1",
         meta: {
-          title: "中文文档",
-        },
+          title: "中文文档"
+        }
       },
       {
         path: "https://juejin.cn/column/7207659644487139387",
         component: () => {},
-        name: "Link2",
+        username: "Link2",
         meta: {
-          title: "新手教程",
-        },
-      },
-    ],
+          title: "新手教程"
+        }
+      }
+    ]
   },
   {
     path: "/table",
     component: Layouts,
     redirect: "/table/element-plus",
-    name: "Table",
+    username: "Table",
     meta: {
       title: "表格",
-      elIcon: "Grid",
+      elIcon: "Grid"
     },
     children: [
       {
         path: "element-plus",
         component: () => import("@/views/table/element-plus/index.vue"),
-        name: "ElementPlus",
+        username: "ElementPlus",
         meta: {
           title: "Element Plus",
-          keepAlive: true,
-        },
+          keepAlive: true
+        }
       },
       {
         path: "vxe-table",
         component: () => import("@/views/table/vxe-table/index.vue"),
-        name: "VxeTable",
+        username: "VxeTable",
         meta: {
           title: "Vxe Table",
-          keepAlive: true,
-        },
-      },
-    ],
+          keepAlive: true
+        }
+      }
+    ]
   },
   {
     path: "/menu",
     component: Layouts,
     redirect: "/menu/menu1",
-    name: "Menu",
+    username: "Menu",
     meta: {
       title: "多级路由",
-      svgIcon: "menu",
+      svgIcon: "menu"
     },
     children: [
       {
         path: "menu1",
         component: () => import("@/views/menu/menu1/index.vue"),
         redirect: "/menu/menu1/menu1-1",
-        name: "Menu1",
+        username: "Menu1",
         meta: {
-          title: "menu1",
+          title: "menu1"
         },
         children: [
           {
             path: "menu1-1",
             component: () => import("@/views/menu/menu1/menu1-1/index.vue"),
-            name: "Menu1-1",
+            username: "Menu1-1",
             meta: {
               title: "menu1-1",
-              keepAlive: true,
-            },
+              keepAlive: true
+            }
           },
           {
             path: "menu1-2",
             component: () => import("@/views/menu/menu1/menu1-2/index.vue"),
             redirect: "/menu/menu1/menu1-2/menu1-2-1",
-            name: "Menu1-2",
+            username: "Menu1-2",
             meta: {
-              title: "menu1-2",
+              title: "menu1-2"
             },
             children: [
               {
                 path: "menu1-2-1",
-                component: () =>
-                  import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
-                name: "Menu1-2-1",
+                component: () => import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
+                username: "Menu1-2-1",
                 meta: {
                   title: "menu1-2-1",
-                  keepAlive: true,
-                },
+                  keepAlive: true
+                }
               },
               {
                 path: "menu1-2-2",
-                component: () =>
-                  import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
-                name: "Menu1-2-2",
+                component: () => import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
+                username: "Menu1-2-2",
                 meta: {
                   title: "menu1-2-2",
-                  keepAlive: true,
-                },
-              },
-            ],
+                  keepAlive: true
+                }
+              }
+            ]
           },
           {
             path: "menu1-3",
             component: () => import("@/views/menu/menu1/menu1-3/index.vue"),
-            name: "Menu1-3",
+            username: "Menu1-3",
             meta: {
               title: "menu1-3",
-              keepAlive: true,
-            },
-          },
-        ],
+              keepAlive: true
+            }
+          }
+        ]
       },
       {
         path: "menu2",
         component: () => import("@/views/menu/menu2/index.vue"),
-        name: "Menu2",
+        username: "Menu2",
         meta: {
           title: "menu2",
-          keepAlive: true,
-        },
-      },
-    ],
+          keepAlive: true
+        }
+      }
+    ]
   },
   {
     path: "/hook-demo",
     component: Layouts,
     redirect: "/hook-demo/use-fetch-select",
-    name: "HookDemo",
+    username: "HookDemo",
     meta: {
       title: "Hook",
       elIcon: "Menu",
-      alwaysShow: true,
+      alwaysShow: true
     },
     children: [
       {
         path: "use-fetch-select",
         component: () => import("@/views/hook-demo/use-fetch-select.vue"),
-        name: "UseFetchSelect",
+        username: "UseFetchSelect",
         meta: {
-          title: "useFetchSelect",
-        },
+          title: "useFetchSelect"
+        }
       },
       {
         path: "use-fullscreen-loading",
         component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
-        name: "UseFullscreenLoading",
+        username: "UseFullscreenLoading",
         meta: {
-          title: "useFullscreenLoading",
-        },
+          title: "useFullscreenLoading"
+        }
       },
       {
         path: "use-watermark",
         component: () => import("@/views/hook-demo/use-watermark.vue"),
-        name: "UseWatermark",
+        username: "UseWatermark",
         meta: {
-          title: "useWatermark",
-        },
-      },
-    ],
-  },
-];
+          title: "useWatermark"
+        }
+      }
+    ]
+  }
+]
 
 /**
  * 动态路由
@@ -246,88 +244,86 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     path: "/permission",
     component: Layouts,
     redirect: "/permission/page",
-    name: "Permission",
+    username: "Permission",
     meta: {
       title: "权限",
       svgIcon: "lock",
       roles: ["admin", "editor"], // 可以在根路由中设置角色
-      alwaysShow: true, // 将始终显示根菜单
+      alwaysShow: true // 将始终显示根菜单
     },
     children: [
       {
         path: "page",
         component: () => import("@/views/permission/page.vue"),
-        name: "PagePermission",
+        username: "PagePermission",
         meta: {
           title: "页面级",
-          roles: ["admin"], // 或者在子导航中设置角色
-        },
+          roles: ["admin"] // 或者在子导航中设置角色
+        }
       },
       {
         path: "directive",
         component: () => import("@/views/permission/directive.vue"),
-        name: "DirectivePermission",
+        username: "DirectivePermission",
         meta: {
-          title: "按钮级", // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
-        },
-      },
-    ],
+          title: "按钮级" // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+        }
+      }
+    ]
   },
   {
     path: "/sys",
     component: Layouts,
     redirect: "/sys/user",
-    name: "User",
+    username: "User",
     meta: {
       title: "系统管理",
       svgIcon: "lock",
       roles: ["admin"], // 可以在根路由中设置角色
-      alwaysShow: true, // 将始终显示根菜单
+      alwaysShow: true // 将始终显示根菜单
     },
     children: [
       {
         path: "user",
         component: () => import("@/views/sys/user/userPage.vue"),
-        name: "userPage",
+        username: "userPage",
         meta: {
           title: "用户管理",
-          roles: ["admin"],
-        },
+          roles: ["admin"]
+        }
       },
       {
         path: "role",
         component: () => import("@/views/sys/role/rolePage.vue"),
-        name: "rolePage",
+        username: "rolePage",
         meta: {
           title: "角色管理",
-          roles: ["admin"],
-        },
-      },
-    ],
-  },
-];
+          roles: ["admin"]
+        }
+      }
+    ]
+  }
+]
 
 const router = createRouter({
   history,
-  routes: routeSettings.thirdLevelRouteCache
-    ? flatMultiLevelRoutes(constantRoutes)
-    : constantRoutes,
-});
+  routes: routeSettings.thirdLevelRouteCache ? flatMultiLevelRoutes(constantRoutes) : constantRoutes
+})
 
 /** 重置路由 */
 export function resetRouter() {
   // 注意：所有动态路由路由必须带有 Name 属性，否则可能会不能完全重置干净
   try {
     router.getRoutes().forEach((route) => {
-      const { name, meta } = route;
+      const { name, meta } = route
       if (name && meta.roles?.length) {
-        router.hasRoute(name) && router.removeRoute(name);
+        router.hasRoute(name) && router.removeRoute(name)
       }
-    });
+    })
   } catch {
     // 强制刷新浏览器也行，只是交互体验不是很好
-    window.location.reload();
+    window.location.reload()
   }
 }
 
-export default router;
+export default router

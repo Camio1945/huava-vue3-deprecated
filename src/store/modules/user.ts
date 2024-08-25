@@ -12,12 +12,7 @@ import {
   setToken
 } from "@/utils/cache/cookies"
 import { resetRouter } from "@/router"
-import {
-  login as loginApi,
-  refreshToken as refreshTokenApi,
-  logout as logoutApi,
-  getUserInfo
-} from "@/api/login"
+import { login as loginApi, refreshToken as refreshTokenApi, logout as logoutApi, getUserInfo } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import routeSettings from "@/config/route"
 

@@ -1,26 +1,18 @@
 <template>
   <div>
-    <popup
-      ref="popupRef"
-      :title="popupTitle"
-      :async="true"
-      width="550px"
-      @confirm="handleSubmit"
-      @close="handleClose"
-    >
-      <el-form
-        class="ls-form"
-        ref="formRef"
-        :rules="rules"
-        :model="formData"
-        label-width="60px"
-      >
+    <popup ref="popupRef" :title="popupTitle" :async="true" @confirm="handleSubmit" @close="handleClose">
+      <el-form class="ls-form" ref="formRef" :rules="rules" :model="formData" label-width="60px">
         <el-form-item label="名称" prop="name">
+          <el-input class="ls-input" v-model="formData.name" placeholder="请输入名称" maxlength="20" clearable />
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
           <el-input
             class="ls-input"
-            v-model="formData.name"
-            placeholder="请输入名称"
-            maxlength="20"
+            type="number"
+            step="1"
+            v-model="formData.sort"
+            placeholder="请输入排序(由低到高排列)"
+            maxlength="3"
             clearable
           />
         </el-form-item>
@@ -44,6 +36,7 @@ import Popup from "@/components/Popup/index.vue"
 import { type FormInstance, ElMessage, FormItemRule } from "element-plus"
 import { computed, reactive, ref, shallowRef } from "vue"
 import { Arrayable } from "element-plus/lib/utils"
+import { setFormDataByDbData } from "@/utils/fn"
 
 const emit = defineEmits(["success", "close"])
 const formRef = shallowRef<FormInstance>()
@@ -58,6 +51,7 @@ const popupTitle = computed(() => {
 const formData = reactive({
   id: "",
   name: "",
+  sort: null,
   description: ""
 })
 
@@ -78,42 +72,25 @@ const rules: Partial<Record<string, Arrayable<FormItemRule>>> = {
   name: [
     { required: true, message: "请输入名称", trigger: ["blur", "change"] },
     {
-      min: 3,
-      max: 10,
-      message: "名称长度应该为 3 ~ 20 个字符",
+      min: 2,
+      max: 20,
+      message: "名称长度应该为 2 ~ 20 个字符",
       trigger: ["blur", "change"]
     },
     { validator: validateName, trigger: "blur" }
-  ]
+  ],
+  sort: [{ required: true, message: "请输入排序", trigger: ["blur", "change"] }]
 }
-
-// const rules = {
-//   name: [
-//     {
-//       required: true,
-//       message: "请输入名称",
-//       trigger: ["blur"],
-//     },
-//     {
-//       min: 3,
-//       max: 20,
-//       message: "名称长度应该为 3 ~ 20 个字符",
-//       trigger: ["blur"],
-//     },
-//     { validator: validateName, trigger: "blur" },
-//   ],
-// };
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
   const params = { ...formData }
   if (mode.value === "create") {
     await create(params)
-    ElMessage.success("操作成功")
   } else if (mode.value === "update") {
     await update(params)
-    ElMessage.success("操作成功")
   }
+  ElMessage.success("操作成功")
   popupRef.value?.close()
   emit("success")
 }
@@ -129,9 +106,7 @@ const open = (type: string) => {
 
 const setFormData = async (id: string) => {
   const data: Role = await detail(id)
-  formData.id = data.id
-  formData.description = data.description
-  formData.name = data.name
+  setFormDataByDbData(formData, data)
 }
 
 defineExpose({

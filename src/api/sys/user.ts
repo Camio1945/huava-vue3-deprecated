@@ -1,9 +1,9 @@
 import { request } from "@/utils/service"
 
 /** 增 */
-export function create(data: CreateOrUpdateRoleRequestData) {
+export function create(data: CreateOrUpdateUserRequestData) {
   return request({
-    url: "sys/role/create",
+    url: "sys/user/create",
     method: "post",
     data
   })
@@ -12,25 +12,25 @@ export function create(data: CreateOrUpdateRoleRequestData) {
 /** 删 */
 export function del(id: string) {
   return request({
-    url: `sys/role/delete`,
+    url: `sys/user/delete`,
     method: "delete",
     data: { id }
   })
 }
 
 /** 改 */
-export function update(data: CreateOrUpdateRoleRequestData) {
+export function update(data: CreateOrUpdateUserRequestData) {
   return request({
-    url: "sys/role/update",
+    url: "sys/user/update",
     method: "put",
     data
   })
 }
 
 /** 查分页 */
-export function page(params: RoleRequestData) {
-  return request<RoleResData>({
-    url: "sys/role/page",
+export function page(params: UserRequestData) {
+  return request<UserResData>({
+    url: "sys/user/page",
     method: "get",
     params
   })
@@ -38,29 +38,29 @@ export function page(params: RoleRequestData) {
 
 /** 查详情 */
 export function detail(id: string) {
-  return request<Role>({
-    url: `sys/role/get/${id}`,
+  return request<User>({
+    url: `sys/user/get/${id}`,
     method: "get"
   })
 }
 
-/** 名称是否已经存在 */
-export function isNameExists(id: string, name: string) {
+/** 用户名是否已经存在 */
+export function isUsernameExists(id: string, username: string) {
   return request<boolean>({
-    url: `sys/role/isNameExists`,
+    url: `sys/user/isUsernameExists`,
     method: "get",
-    params: { id, name }
+    params: { id, username }
   })
 }
 
 /** interfaces (data structure) */
 
-interface CreateOrUpdateRoleRequestData {
+interface CreateOrUpdateUserRequestData {
   name: string
   description?: string
 }
 
-interface RoleRequestData {
+interface UserRequestData {
   /** 当前页码 */
   current: number
   /** 查询条数 */
@@ -71,14 +71,14 @@ interface RoleRequestData {
   description?: string
 }
 
-export interface Role {
+export interface User {
   id: string
   name: string
   description: string
   createTime: string
 }
 
-export type RoleResData = {
-  list: Role[]
+export type UserResData = {
+  list: User[]
   total: number
 }

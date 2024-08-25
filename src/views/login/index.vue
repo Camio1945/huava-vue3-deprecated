@@ -48,7 +48,7 @@ const handleLogin = () => {
         })
         .catch(() => {
           createCode()
-          loginFormData.password = ""
+          // loginFormData.password = ""
         })
         .finally(() => {
           loading.value = false
@@ -84,12 +84,7 @@ loginFormData.captchaCode = captchaCode
         <img src="@/assets/layouts/logo-text-2.png" />
       </div>
       <div class="content">
-        <el-form
-          ref="loginFormRef"
-          :model="loginFormData"
-          :rules="loginFormRules"
-          @keyup.enter="handleLogin"
-        >
+        <el-form ref="loginFormRef" :model="loginFormData" :rules="loginFormRules" @keyup.enter="handleLogin">
           <el-form-item prop="username">
             <el-input
               v-model.trim="loginFormData.username"
@@ -139,13 +134,7 @@ loginFormData.captchaCode = captchaCode
               </template>
             </el-input>
           </el-form-item>
-          <el-button
-            :loading="loading"
-            type="primary"
-            size="large"
-            @click.prevent="handleLogin"
-            >登 录
-          </el-button>
+          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">登 录 </el-button>
         </el-form>
       </div>
     </div>

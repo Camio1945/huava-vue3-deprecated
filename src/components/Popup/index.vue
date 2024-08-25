@@ -2,7 +2,7 @@
   <div class="dialog">
     <div class="dialog__trigger" @click="open">
       <!-- 触发弹窗 -->
-      <slot name="trigger"></slot>
+      <slot name="trigger" />
     </div>
     <el-dialog
       v-model="visible"
@@ -24,11 +24,7 @@
         <el-button v-if="cancelButtonText" @click="handleEvent('cancel')">
           {{ cancelButtonText }}
         </el-button>
-        <el-button
-          v-if="confirmButtonText"
-          type="primary"
-          @click="handleEvent('confirm')"
-        >
+        <el-button v-if="confirmButtonText" type="primary" @click="handleEvent('confirm')">
           {{ confirmButtonText }}
         </el-button>
       </div>
@@ -37,99 +33,100 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, provide, ref } from "vue";
+import { defineComponent, nextTick, provide, ref } from "vue"
 
 export default defineComponent({
   props: {
     title: {
       // 弹窗标题
       type: String,
-      default: "",
+      default: ""
     },
     content: {
       // 弹窗内容
       type: String,
-      default: "",
+      default: ""
     },
     confirmButtonText: {
       // 确认按钮内容
       type: [String, Boolean],
-      default: "确定",
+      default: "确定"
     },
     cancelButtonText: {
       // 取消按钮内容
       type: [String, Boolean],
-      default: "取消",
+      default: "取消"
     },
     width: {
       // 弹窗的宽度（被忽略了，因为增加了 fullscreen 属性）
       type: String,
-      default: "500px",
+      default: "500px"
     },
     disabled: {
       // 是否禁用
       type: Boolean,
-      default: false,
+      default: false
     },
     async: {
       // 是否开启异步关闭
       type: Boolean,
-      default: false,
+      default: false
     },
     clickModalClose: {
       // 点击遮罩层关闭对话窗口
       type: Boolean,
-      default: false,
+      default: false
     },
     center: {
       // 是否居中布局
       type: Boolean,
-      default: false,
+      default: false
     },
     customClass: {
       type: String,
-      default: "",
-    },
+      default: ""
+    }
   },
   emits: ["confirm", "cancel", "close", "open"],
   setup(props, { emit }) {
-    const visible = ref(false);
+    const visible = ref(false)
 
     const handleEvent = (type: "confirm" | "cancel") => {
-      emit(type);
+      emit(type)
       if (!props.async || type === "cancel") {
-        close();
+        close()
       }
-    };
+    }
 
     const close = () => {
-      visible.value = false;
+      visible.value = false
       nextTick(() => {
-        emit("close");
-      });
-    };
+        emit("close")
+      })
+    }
     const open = () => {
       if (props.disabled) {
-        return;
+        return
       }
-      emit("open");
-      visible.value = true;
-    };
-    provide("visible", visible);
+      emit("open")
+      visible.value = true
+    }
+    provide("visible", visible)
     return {
       visible,
       handleEvent,
       close,
-      open,
-    };
-  },
-});
+      open
+    }
+  }
+})
 </script>
 
 <style scoped lang="scss">
 .dialog-body {
   white-space: pre-line;
 }
+
 .dialog-footer {
   text-align: center;
 }

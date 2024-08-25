@@ -16,7 +16,7 @@ import {
 
 defineOptions({
   // 命名当前组件
-  name: "VxeTable"
+  username: "VxeTable"
 })
 
 //#region vxe-grid
@@ -31,6 +31,7 @@ interface RowMeta {
   /** vxe-table 自动添加上去的属性 */
   _VXE_ID?: string
 }
+
 const xGridDom = ref<VxeGridInstance>()
 const xGridOpt: VxeGridProps = reactive({
   loading: true,
@@ -45,20 +46,20 @@ const xGridOpt: VxeGridProps = reactive({
       {
         field: "username",
         itemRender: {
-          name: "$input",
+          username: "$input",
           props: { placeholder: "用户名", clearable: true }
         }
       },
       {
         field: "phone",
         itemRender: {
-          name: "$input",
+          username: "$input",
           props: { placeholder: "手机号", clearable: true }
         }
       },
       {
         itemRender: {
-          name: "$buttons",
+          username: "$buttons",
           children: [
             {
               props: { type: "submit", content: "查询", status: "primary" }
@@ -202,12 +203,12 @@ const xFormOpt: VxeFormProps = reactive({
     {
       field: "username",
       title: "用户名",
-      itemRender: { name: "$input", props: { placeholder: "请输入" } }
+      itemRender: { username: "$input", props: { placeholder: "请输入" } }
     },
     {
       field: "password",
       title: "密码",
-      itemRender: { name: "$input", props: { placeholder: "请输入" } }
+      itemRender: { username: "$input", props: { placeholder: "请输入" } }
     },
     {
       align: "right",
@@ -358,19 +359,12 @@ const crudStore = reactive({
     <vxe-grid ref="xGridDom" v-bind="xGridOpt">
       <!-- 左侧按钮列表 -->
       <template #toolbar-btns>
-        <vxe-button
-          status="primary"
-          icon="vxe-icon-add"
-          @click="crudStore.onShowModal()"
-          >新增用户</vxe-button
-        >
+        <vxe-button status="primary" icon="vxe-icon-add" @click="crudStore.onShowModal()">新增用户 </vxe-button>
         <vxe-button status="danger" icon="vxe-icon-delete">批量删除</vxe-button>
       </template>
       <!-- 操作 -->
       <template #row-operate="{ row }">
-        <el-button link type="primary" @click="crudStore.onShowModal(row)"
-          >修改</el-button
-        >
+        <el-button link type="primary" @click="crudStore.onShowModal(row)">修改 </el-button>
         <el-button link type="danger" @click="crudStore.onDelete(row)">删除</el-button>
       </template>
     </vxe-grid>

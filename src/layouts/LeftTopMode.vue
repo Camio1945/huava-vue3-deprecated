@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import { storeToRefs } from "pinia";
-import { useAppStore } from "@/store/modules/app";
-import { useSettingsStore } from "@/store/modules/settings";
-import { AppMain, NavigationBar, Sidebar, TagsView, Logo } from "./components";
+import { computed } from "vue"
+import { storeToRefs } from "pinia"
+import { useAppStore } from "@/store/modules/app"
+import { useSettingsStore } from "@/store/modules/settings"
+import { AppMain, NavigationBar, Sidebar, TagsView, Logo } from "./components"
 
-const appStore = useAppStore();
-const settingsStore = useSettingsStore();
-const { showTagsView, showLogo } = storeToRefs(settingsStore);
+const appStore = useAppStore()
+const settingsStore = useSettingsStore()
+const { showTagsView, showLogo } = storeToRefs(settingsStore)
 
 /** 定义计算属性 layoutClasses，用于控制布局的类名 */
 const layoutClasses = computed(() => {
   return {
-    hideSidebar: !appStore.sidebar.opened,
-  };
-});
+    hideSidebar: !appStore.sidebar.opened
+  }
+})
 </script>
 
 <template>
@@ -39,6 +39,7 @@ const layoutClasses = computed(() => {
 
 <style lang="scss" scoped>
 @import "@/styles/mixins.scss";
+
 $transition-time: 0.35s;
 
 .app-wrapper {
@@ -52,9 +53,11 @@ $transition-time: 0.35s;
   z-index: 1002;
   width: 100%;
   display: flex;
+
   .logo {
     width: var(--v3-sidebar-width);
   }
+
   .content {
     flex: 1;
     position: relative;
@@ -95,6 +98,7 @@ $transition-time: 0.35s;
   .sidebar-container {
     width: var(--v3-sidebar-hide-width) !important;
   }
+
   .app-main {
     padding-left: var(--v3-sidebar-hide-width);
   }
@@ -104,6 +108,7 @@ $transition-time: 0.35s;
   .sidebar-container {
     padding-top: var(--v3-header-height);
   }
+
   .app-main {
     padding-top: var(--v3-header-height);
   }

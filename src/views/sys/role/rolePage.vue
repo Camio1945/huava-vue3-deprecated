@@ -9,9 +9,7 @@
           <el-input v-model="searchData.description" placeholder="描述" title="描述" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :icon="Search" @click="handleSearch"
-            >查询</el-button
-          >
+          <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
           <el-button :icon="Refresh" @click="resetSearch">重置</el-button>
         </el-form-item>
       </el-form>
@@ -19,19 +17,12 @@
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="handleCreate"
-            >新增角色</el-button
-          >
+          <el-button type="primary" :icon="CirclePlus" @click="handleCreate">新增角色</el-button>
           <el-button type="danger" :icon="Delete" v-if="false">批量删除</el-button>
         </div>
         <div>
           <el-tooltip content="刷新当前页">
-            <el-button
-              type="primary"
-              :icon="RefreshRight"
-              circle
-              @click="getTableData"
-            />
+            <el-button type="primary" :icon="RefreshRight" circle @click="getTableData" />
           </el-tooltip>
         </div>
       </div>
@@ -39,25 +30,16 @@
         <el-table :data="tableData">
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column prop="name" label="名称" align="center" />
+          <el-table-column prop="sort" label="排序" align="center" />
           <el-table-column prop="description" label="描述" align="center" />
           <el-table-column prop="createTime" label="创建时间" align="center" />
           <el-table-column fixed="right" label="操作" width="150" align="center">
             <template #default="scope">
-              <el-button
-                type="primary"
-                text
-                bg
-                size="small"
-                @click="handleUpdate(scope.row)"
-                >修改
+              <el-button type="primary" text bg size="small" @click="handleUpdate(scope.row)" v-if="scope.row.id != 1">
+                修改
               </el-button>
-              <el-button
-                type="danger"
-                text
-                bg
-                size="small"
-                @click="handleDelete(scope.row)"
-                >删除
+              <el-button type="danger" text bg size="small" @click="handleDelete(scope.row)" v-if="scope.row.id != 1">
+                删除
               </el-button>
             </template>
           </el-table-column>
@@ -77,12 +59,7 @@
       </div>
     </el-card>
     <!-- 新增/修改 -->
-    <RoleForm
-      v-if="isFormVisible"
-      ref="formRef"
-      @success="getTableData"
-      @close="isFormVisible = false"
-    />
+    <RoleForm v-if="isFormVisible" ref="formRef" @success="getTableData" @close="isFormVisible = false" />
   </div>
 </template>
 
@@ -90,13 +67,7 @@
 import { nextTick, reactive, ref, shallowRef, watch } from "vue"
 import { del, page, type Role } from "@/api/sys/role"
 import { type FormInstance, ElMessage, ElMessageBox } from "element-plus"
-import {
-  Search,
-  Refresh,
-  CirclePlus,
-  Delete,
-  RefreshRight
-} from "@element-plus/icons-vue"
+import { Search, Refresh, CirclePlus, Delete, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import RoleForm from "./components/RoleForm.vue"
 
@@ -105,7 +76,7 @@ const isFormVisible = ref<boolean>(false)
 
 defineOptions({
   // 命名当前组件
-  name: "ElementPlus"
+  username: "ElementPlus"
 })
 
 const loading = ref<boolean>(false)
@@ -138,7 +109,7 @@ const getTableData = () => {
   page({
     currentPage: paginationData.currentPage,
     size: paginationData.pageSize,
-    name: searchData.name || undefined,
+    username: searchData.name || undefined,
     description: searchData.description || undefined
   })
     .then((data) => {

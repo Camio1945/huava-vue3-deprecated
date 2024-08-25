@@ -1,66 +1,52 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import { useAppStore } from "@/store/modules/app";
-import { usePermissionStore } from "@/store/modules/permission";
-import { useSettingsStore } from "@/store/modules/settings";
-import SidebarItem from "./SidebarItem.vue";
-import Logo from "../Logo/index.vue";
-import { useDevice } from "@/hooks/useDevice";
-import { useLayoutMode } from "@/hooks/useLayoutMode";
-import { getCssVariableValue } from "@/utils";
+import { computed } from "vue"
+import { useRoute } from "vue-router"
+import { useAppStore } from "@/store/modules/app"
+import { usePermissionStore } from "@/store/modules/permission"
+import { useSettingsStore } from "@/store/modules/settings"
+import SidebarItem from "./SidebarItem.vue"
+import Logo from "../Logo/index.vue"
+import { useDevice } from "@/hooks/useDevice"
+import { useLayoutMode } from "@/hooks/useLayoutMode"
+import { getCssVariableValue } from "@/utils"
 
-const v3SidebarMenuBgColor = getCssVariableValue("--v3-sidebar-menu-bg-color");
-const v3SidebarMenuTextColor = getCssVariableValue(
-  "--v3-sidebar-menu-text-color",
-);
-const v3SidebarMenuActiveTextColor = getCssVariableValue(
-  "--v3-sidebar-menu-active-text-color",
-);
+const v3SidebarMenuBgColor = getCssVariableValue("--v3-sidebar-menu-bg-color")
+const v3SidebarMenuTextColor = getCssVariableValue("--v3-sidebar-menu-text-color")
+const v3SidebarMenuActiveTextColor = getCssVariableValue("--v3-sidebar-menu-active-text-color")
 
-const { isMobile } = useDevice();
-const { isLeft, isTop } = useLayoutMode();
-const route = useRoute();
-const appStore = useAppStore();
-const permissionStore = usePermissionStore();
-const settingsStore = useSettingsStore();
+const { isMobile } = useDevice()
+const { isLeft, isTop } = useLayoutMode()
+const route = useRoute()
+const appStore = useAppStore()
+const permissionStore = usePermissionStore()
+const settingsStore = useSettingsStore()
 
 const activeMenu = computed(() => {
   const {
     meta: { activeMenu },
-    path,
-  } = route;
-  return activeMenu ? activeMenu : path;
-});
-const noHiddenRoutes = computed(() =>
-  permissionStore.routes.filter((item) => !item.meta?.hidden),
-);
-const isCollapse = computed(() => !appStore.sidebar.opened);
-const isLogo = computed(() => isLeft.value && settingsStore.showLogo);
-const backgroundColor = computed(() =>
-  isLeft.value ? v3SidebarMenuBgColor : undefined,
-);
-const textColor = computed(() =>
-  isLeft.value ? v3SidebarMenuTextColor : undefined,
-);
-const activeTextColor = computed(() =>
-  isLeft.value ? v3SidebarMenuActiveTextColor : undefined,
-);
+    path
+  } = route
+  return activeMenu ? activeMenu : path
+})
+const noHiddenRoutes = computed(() => permissionStore.routes.filter((item) => !item.meta?.hidden))
+const isCollapse = computed(() => !appStore.sidebar.opened)
+const isLogo = computed(() => isLeft.value && settingsStore.showLogo)
+const backgroundColor = computed(() => (isLeft.value ? v3SidebarMenuBgColor : undefined))
+const textColor = computed(() => (isLeft.value ? v3SidebarMenuTextColor : undefined))
+const activeTextColor = computed(() => (isLeft.value ? v3SidebarMenuActiveTextColor : undefined))
 const sidebarMenuItemHeight = computed(() => {
-  return !isTop.value
-    ? "var(--v3-sidebar-menu-item-height)"
-    : "var(--v3-navigationbar-height)";
-});
+  return !isTop.value ? "var(--v3-sidebar-menu-item-height)" : "var(--v3-navigationbar-height)"
+})
 const sidebarMenuHoverBgColor = computed(() => {
-  return !isTop.value ? "var(--v3-sidebar-menu-hover-bg-color)" : "transparent";
-});
+  return !isTop.value ? "var(--v3-sidebar-menu-hover-bg-color)" : "transparent"
+})
 const tipLineWidth = computed(() => {
-  return !isTop.value ? "2px" : "0px";
-});
+  return !isTop.value ? "2px" : "0px"
+})
 // 当为顶部模式时隐藏垂直滚动条
 const hiddenScrollbarVerticalBar = computed(() => {
-  return isTop.value ? "none" : "block";
-});
+  return isTop.value ? "none" : "block"
+})
 </script>
 
 <template>
@@ -77,12 +63,7 @@ const hiddenScrollbarVerticalBar = computed(() => {
         :collapse-transition="false"
         :mode="isTop && !isMobile ? 'horizontal' : 'vertical'"
       >
-        <SidebarItem
-          v-for="route in noHiddenRoutes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-        />
+        <SidebarItem v-for="route in noHiddenRoutes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -111,19 +92,23 @@ const hiddenScrollbarVerticalBar = computed(() => {
 .el-scrollbar {
   // 多 1% 是为了在顶部模式时防止垂直滚动
   height: 101%;
+
   :deep(.scrollbar-wrapper) {
     // 限制水平宽度
     overflow-x: hidden !important;
+
     .el-scrollbar__view {
       height: 100%;
     }
   }
+
   // 滚动条
   :deep(.el-scrollbar__bar) {
     &.is-horizontal {
       // 隐藏水平滚动条
       display: none;
     }
+
     &.is-vertical {
       // 当为顶部模式时隐藏垂直滚动条
       display: v-bind(hiddenScrollbarVerticalBar);
@@ -147,6 +132,7 @@ const hiddenScrollbarVerticalBar = computed(() => {
 :deep(.el-menu--horizontal .el-menu-item) {
   height: v-bind(sidebarMenuItemHeight);
   line-height: v-bind(sidebarMenuItemHeight);
+
   &.is-active,
   &:hover {
     background-color: v-bind(sidebarMenuHoverBgColor);
