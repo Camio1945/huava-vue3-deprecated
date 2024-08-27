@@ -296,7 +296,6 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "role",
         component: () => import("@/views/sys/role/rolePage.vue"),
-        name: "rolePage",
         name: "角色管理",
         meta: {
           title: "角色管理",
