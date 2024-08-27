@@ -16,7 +16,7 @@ import {
 
 defineOptions({
   // 命名当前组件
-  username: "VxeTable"
+  name: "VxeTable"
 })
 
 //#region vxe-grid

@@ -76,7 +76,7 @@ const isFormVisible = ref<boolean>(false)
 
 defineOptions({
   // 命名当前组件
-  username: "ElementPlus"
+  name: "rolePage"
 })
 
 const loading = ref<boolean>(false)

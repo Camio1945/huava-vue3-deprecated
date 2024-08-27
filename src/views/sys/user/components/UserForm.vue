@@ -83,7 +83,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { create, update, detail, isUsernameExists, type User } from "@/api/sys/user"
+import { create, update, detail, isUsernameExists, type User, type CreateOrUpdateUserRequestData } from "@/api/sys/user"
 import { page as rolePage, Role, RoleResData } from "@/api/sys/role"
 import Popup from "@/components/Popup/index.vue"
 import { type FormInstance, ElMessage, FormItemRule } from "element-plus"
@@ -131,7 +131,7 @@ const beforeAvatarUpload = (file: File) => {
   return isJPGorPNG && isLt512K
 }
 
-const formData = reactive({
+const formData: CreateOrUpdateUserRequestData = reactive({
   id: "",
   username: "",
   password: "",

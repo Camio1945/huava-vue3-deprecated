@@ -41,7 +41,7 @@ export const CompConsumer = defineComponent(
         }
         // @ts-expect-error this is VNode
         Comp = defineComponent({
-          username: routeName,
+          name: routeName,
           setup() {
             return () => node
           }
@@ -61,7 +61,7 @@ export const CompConsumer = defineComponent(
     }
   },
   {
-    username: "CompConsumer",
+    name: "CompConsumer",
     props: ["component"]
   }
 )

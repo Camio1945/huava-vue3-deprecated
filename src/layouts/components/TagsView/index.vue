@@ -48,7 +48,7 @@ const filterAffixTags = (routes: RouteRecordRaw[], basePath = "/") => {
       tags.push({
         fullPath: tagPath,
         path: tagPath,
-        username: route.name,
+        name: route.name,
         meta: { ...route.meta }
       })
     }

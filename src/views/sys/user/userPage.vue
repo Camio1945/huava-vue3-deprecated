@@ -3,13 +3,13 @@
     <el-card v-loading="loading" shadow="never" class="search-wrapper">
       <el-form ref="searchFormRef" :inline="true" :model="searchData">
         <el-form-item prop="username">
-          <el-input v-model="searchData.username" placeholder="用户名" title="用户名" />
+          <el-input v-model="searchData.username" placeholder="用户名" title="用户名" @keyup.enter="handleSearch" />
         </el-form-item>
         <el-form-item prop="realName" label="">
-          <el-input v-model="searchData.realName" placeholder="姓名" title="姓名" />
+          <el-input v-model="searchData.realName" placeholder="姓名" title="姓名" @keyup.enter="handleSearch" />
         </el-form-item>
         <el-form-item prop="phoneNumber" label="">
-          <el-input v-model="searchData.phoneNumber" placeholder="手机号" title="手机号" />
+          <el-input v-model="searchData.phoneNumber" placeholder="手机号" title="手机号" @keyup.enter="handleSearch" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
@@ -70,22 +70,21 @@
     <UserForm v-if="isFormVisible" ref="formRef" @success="getTableData" @close="isFormVisible = false" />
   </div>
 </template>
-
 <script lang="ts" setup>
 import { nextTick, reactive, ref, shallowRef, watch } from "vue"
-import { del, page, type User } from "@/api/sys/user"
+import { del, page, type User, type UserRequestData } from "@/api/sys/user"
 import { type FormInstance, ElMessage, ElMessageBox } from "element-plus"
 import { Search, Refresh, CirclePlus, Delete, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
 import UserForm from "./components/UserForm.vue"
 
-const formRef = shallowRef<InstanceType<typeof UserForm>>()
-const isFormVisible = ref<boolean>(false)
-
 defineOptions({
   // 命名当前组件
-  username: "ElementPlus"
+  name: "用户管理"
 })
+
+const formRef = shallowRef<InstanceType<typeof UserForm>>()
+const isFormVisible = ref<boolean>(false)
 
 const loading = ref<boolean>(false)
 const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
@@ -114,14 +113,16 @@ const searchData = reactive({
   phoneNumber: ""
 })
 const getTableData = () => {
+  console.log("3333 getTableData")
   loading.value = true
-  page({
+  const params: UserRequestData = {
     currentPage: paginationData.currentPage,
     size: paginationData.pageSize,
     username: searchData.username || undefined,
     realName: searchData.realName || undefined,
     phoneNumber: searchData.phoneNumber || undefined
-  })
+  }
+  page(params)
     .then((data) => {
       paginationData.total = data.total
       tableData.value = data.list
@@ -163,7 +164,6 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
   immediate: true
 })
 </script>
-
 <style lang="scss" scoped>
 .search-wrapper {
   margin-bottom: 20px;

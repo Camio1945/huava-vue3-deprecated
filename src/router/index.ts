@@ -52,7 +52,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "dashboard",
         component: () => import("@/views/dashboard/index.vue"),
-        username: "Dashboard",
+        name: "Dashboard",
         meta: {
           title: "首页",
           svgIcon: "dashboard",
@@ -71,7 +71,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "https://juejin.cn/post/7089377403717287972",
         component: () => {},
-        username: "Link1",
+        name: "Link1",
         meta: {
           title: "中文文档"
         }
@@ -79,7 +79,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "https://juejin.cn/column/7207659644487139387",
         component: () => {},
-        username: "Link2",
+        name: "Link2",
         meta: {
           title: "新手教程"
         }
@@ -90,7 +90,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/table",
     component: Layouts,
     redirect: "/table/element-plus",
-    username: "Table",
+    name: "Table",
     meta: {
       title: "表格",
       elIcon: "Grid"
@@ -99,7 +99,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "element-plus",
         component: () => import("@/views/table/element-plus/index.vue"),
-        username: "ElementPlus",
+        name: "ElementPlus",
         meta: {
           title: "Element Plus",
           keepAlive: true
@@ -108,7 +108,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "vxe-table",
         component: () => import("@/views/table/vxe-table/index.vue"),
-        username: "VxeTable",
+        name: "VxeTable",
         meta: {
           title: "Vxe Table",
           keepAlive: true
@@ -120,7 +120,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/menu",
     component: Layouts,
     redirect: "/menu/menu1",
-    username: "Menu",
+    name: "Menu",
     meta: {
       title: "多级路由",
       svgIcon: "menu"
@@ -130,7 +130,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         path: "menu1",
         component: () => import("@/views/menu/menu1/index.vue"),
         redirect: "/menu/menu1/menu1-1",
-        username: "Menu1",
+        name: "Menu1",
         meta: {
           title: "menu1"
         },
@@ -138,7 +138,7 @@ export const constantRoutes: RouteRecordRaw[] = [
           {
             path: "menu1-1",
             component: () => import("@/views/menu/menu1/menu1-1/index.vue"),
-            username: "Menu1-1",
+            name: "Menu1-1",
             meta: {
               title: "menu1-1",
               keepAlive: true
@@ -148,7 +148,7 @@ export const constantRoutes: RouteRecordRaw[] = [
             path: "menu1-2",
             component: () => import("@/views/menu/menu1/menu1-2/index.vue"),
             redirect: "/menu/menu1/menu1-2/menu1-2-1",
-            username: "Menu1-2",
+            name: "Menu1-2",
             meta: {
               title: "menu1-2"
             },
@@ -156,7 +156,7 @@ export const constantRoutes: RouteRecordRaw[] = [
               {
                 path: "menu1-2-1",
                 component: () => import("@/views/menu/menu1/menu1-2/menu1-2-1/index.vue"),
-                username: "Menu1-2-1",
+                name: "Menu1-2-1",
                 meta: {
                   title: "menu1-2-1",
                   keepAlive: true
@@ -165,7 +165,7 @@ export const constantRoutes: RouteRecordRaw[] = [
               {
                 path: "menu1-2-2",
                 component: () => import("@/views/menu/menu1/menu1-2/menu1-2-2/index.vue"),
-                username: "Menu1-2-2",
+                name: "Menu1-2-2",
                 meta: {
                   title: "menu1-2-2",
                   keepAlive: true
@@ -176,7 +176,7 @@ export const constantRoutes: RouteRecordRaw[] = [
           {
             path: "menu1-3",
             component: () => import("@/views/menu/menu1/menu1-3/index.vue"),
-            username: "Menu1-3",
+            name: "Menu1-3",
             meta: {
               title: "menu1-3",
               keepAlive: true
@@ -187,7 +187,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "menu2",
         component: () => import("@/views/menu/menu2/index.vue"),
-        username: "Menu2",
+        name: "Menu2",
         meta: {
           title: "menu2",
           keepAlive: true
@@ -199,7 +199,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/hook-demo",
     component: Layouts,
     redirect: "/hook-demo/use-fetch-select",
-    username: "HookDemo",
+    name: "HookDemo",
     meta: {
       title: "Hook",
       elIcon: "Menu",
@@ -209,7 +209,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "use-fetch-select",
         component: () => import("@/views/hook-demo/use-fetch-select.vue"),
-        username: "UseFetchSelect",
+        name: "UseFetchSelect",
         meta: {
           title: "useFetchSelect"
         }
@@ -217,7 +217,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "use-fullscreen-loading",
         component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
-        username: "UseFullscreenLoading",
+        name: "UseFullscreenLoading",
         meta: {
           title: "useFullscreenLoading"
         }
@@ -225,7 +225,7 @@ export const constantRoutes: RouteRecordRaw[] = [
       {
         path: "use-watermark",
         component: () => import("@/views/hook-demo/use-watermark.vue"),
-        username: "UseWatermark",
+        name: "UseWatermark",
         meta: {
           title: "useWatermark"
         }
@@ -244,7 +244,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     path: "/permission",
     component: Layouts,
     redirect: "/permission/page",
-    username: "Permission",
+    name: "Permission",
     meta: {
       title: "权限",
       svgIcon: "lock",
@@ -255,7 +255,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "page",
         component: () => import("@/views/permission/page.vue"),
-        username: "PagePermission",
+        name: "PagePermission",
         meta: {
           title: "页面级",
           roles: ["admin"] // 或者在子导航中设置角色
@@ -264,7 +264,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "directive",
         component: () => import("@/views/permission/directive.vue"),
-        username: "DirectivePermission",
+        name: "DirectivePermission",
         meta: {
           title: "按钮级" // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
         }
@@ -275,7 +275,7 @@ export const dynamicRoutes: RouteRecordRaw[] = [
     path: "/sys",
     component: Layouts,
     redirect: "/sys/user",
-    username: "User",
+    name: "User",
     meta: {
       title: "系统管理",
       svgIcon: "lock",
@@ -286,19 +286,32 @@ export const dynamicRoutes: RouteRecordRaw[] = [
       {
         path: "user",
         component: () => import("@/views/sys/user/userPage.vue"),
-        username: "userPage",
+        name: "用户管理",
         meta: {
           title: "用户管理",
-          roles: ["admin"]
+          roles: ["admin"],
+          keepAlive: true
         }
       },
       {
         path: "role",
         component: () => import("@/views/sys/role/rolePage.vue"),
-        username: "rolePage",
+        name: "rolePage",
+        name: "角色管理",
         meta: {
           title: "角色管理",
-          roles: ["admin"]
+          roles: ["admin"],
+          keepAlive: true
+        }
+      },
+      {
+        path: "password",
+        component: () => import("@/views/sys/user/password.vue"),
+        name: "修改密码",
+        meta: {
+          title: "修改密码",
+          roles: ["admin"],
+          keepAlive: true
         }
       }
     ]

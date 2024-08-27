@@ -27,6 +27,15 @@ export function update(data: CreateOrUpdateUserRequestData) {
   })
 }
 
+/** 改密码 */
+export function updatePassword(data: UpdatePasswordData) {
+  return request({
+    url: "sys/user/updatePassword",
+    method: "patch",
+    data
+  })
+}
+
 /** 查分页 */
 export function page(params: UserRequestData) {
   return request<UserResData>({
@@ -55,12 +64,25 @@ export function isUsernameExists(id: string, username: string) {
 
 /** interfaces (data structure) */
 
-interface CreateOrUpdateUserRequestData {
-  name: string
-  description?: string
+export interface CreateOrUpdateUserRequestData {
+  id: string
+  username: string
+  password: string
+  realName: string
+  phoneNumber: string
+  gender: string
+  isEnabled: boolean
+  disabledReason: string
+  roleIds: string[]
+  avatar: string
 }
 
-interface UserRequestData {
+export interface UpdatePasswordData {
+  oldPassword: string
+  newPassword: string
+}
+
+export interface UserRequestData {
   /** 当前页码 */
   current: number
   /** 查询条数 */
